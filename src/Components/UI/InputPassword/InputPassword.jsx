@@ -17,7 +17,7 @@ const InputPassword = ({ children, name, fun, value }) => {
       >
         <input
           id={children}
-          type={show ? "password" : "text"}
+          type={show ? "text" : "password"}
           name={name}
           style={{
             width: "100%",
