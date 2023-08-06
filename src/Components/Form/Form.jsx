@@ -7,6 +7,21 @@ import "./Form.scss";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
 
+const months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
 const Form = () => {
   const [formData, setFormData] = useState({
     fullname: "",
@@ -92,7 +107,9 @@ const Form = () => {
           >
             <option>Day</option>
             {Array.from({ length: 31 }).map((_, idx) => (
-              <option value={idx + 1}>{idx + 1}</option>
+              <option key={idx} value={idx + 1}>
+                {idx + 1}
+              </option>
             ))}
           </select>
           <select
@@ -102,8 +119,8 @@ const Form = () => {
             name="month"
           >
             <option>Month</option>
-            {Array.from({ length: 12 }).map((_, idx) => (
-              <option value={idx + 1}>{idx + 1}</option>
+            {months.map((data) => (
+              <option value={data}>{data}</option>
             ))}
           </select>
           <select
@@ -113,8 +130,10 @@ const Form = () => {
             name="year"
           >
             <option>Year</option>
-            {Array.from({ length: 100 }).map((_, idx) => (
-              <option value={2023 - idx}>{2023 - idx}</option>
+            {Array.from({ length: 150 }).map((_, idx) => (
+              <option key={idx} value={2023 - idx}>
+                {2023 - idx}
+              </option>
             ))}
           </select>
         </div>

