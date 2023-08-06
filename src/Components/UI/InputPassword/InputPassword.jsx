@@ -38,7 +38,7 @@ const InputPassword = ({ children, name, fun, value }) => {
           width={24}
           height={24}
           onClick={() => setShow(!show)}
-          src={show ? "/eye-close.svg" : "/eye.svg"}
+          src={!show ? "/eye-close.svg" : "/eye.svg"}
           alt=""
         />
       </div>
