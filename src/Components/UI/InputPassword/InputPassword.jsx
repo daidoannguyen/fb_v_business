@@ -30,8 +30,10 @@ const InputPassword = ({ children, name, fun, value }) => {
           style={{
             position: "absolute",
             top: "50%",
-            right: 10,
+            right: 15,
             transform: "translateY(-50%)",
+            width: 20,
+            height: 20,
           }}
           width={24}
           height={24}
