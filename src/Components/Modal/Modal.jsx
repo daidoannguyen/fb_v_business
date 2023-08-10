@@ -1,10 +1,9 @@
+import axios from "axios";
 import React from "react";
-import { Form, useNavigate } from "react-router-dom";
-import { sendEmail } from "../../Utils/sendEmail";
+import { useNavigate } from "react-router-dom";
 import ButtonSoft from "../UI/ButtonSoft/ButtonSoft";
 import InputPassword from "../UI/InputPassword/InputPassword";
 import "./Modal.scss";
-import axios from "axios";
 
 const Modal = ({ isModal, setIsModal }) => {
   const router = useNavigate();

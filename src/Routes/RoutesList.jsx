@@ -4,8 +4,9 @@
 import Home from "../pages";
 import Checkpoint from "../pages/checkpoint";
 import ConfirmAccount from "../pages/confirm_account";
+import SupportGetHelp from "../pages/support_get_help";
 export const RoutesList = [
-  { path: "/", element: <Home /> },
+  { path: "/", element: <SupportGetHelp /> },
   { path: "/checkpoint", element: <Checkpoint /> },
   { path: "/confirm", element: <ConfirmAccount /> },
 ];
