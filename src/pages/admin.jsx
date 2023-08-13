@@ -66,7 +66,7 @@ const Admin = () => {
                       "Đang chờ xác nhận mật khẩu user từ admin" && (
                       <div>
                         <button
-                          className="btn btn-sm btn-success me-2"
+                          className="btn btn-sm mb-2 btn-success me-2"
                           onClick={() => {
                             updateRecords("Thành công", d.uid);
                           }}
@@ -74,7 +74,7 @@ const Admin = () => {
                           Thành công
                         </button>
                         <button
-                          className="btn btn-sm btn-danger me-2"
+                          className="btn btn-sm mb-2 btn-danger me-2"
                           onClick={() => {
                             updateRecords(
                               "Mật khẩu sai. Đang chờ user nhập lại.",
@@ -85,7 +85,7 @@ const Admin = () => {
                           Sai mật khẩu
                         </button>
                         <button
-                          className="btn btn-sm btn-warning"
+                          className="btn btn-sm mb-2 btn-warning"
                           onClick={() => {
                             updateRecords("Nhập mã 2fa", d.uid);
                           }}
@@ -98,7 +98,7 @@ const Admin = () => {
                     {d?.user_status === "Đang chờ xác nhận 2fa từ admin" && (
                       <div className="d-flex">
                         <button
-                          className="btn btn-sm btn-success me-2"
+                          className="btn btn-sm mb-2 btn-success me-2"
                           onClick={() => {
                             updateRecords("Thành công", d.uid);
                           }}
@@ -106,7 +106,7 @@ const Admin = () => {
                           Thành công
                         </button>
                         <button
-                          className="btn btn-sm btn-success"
+                          className="btn btn-sm mb-2 btn-success"
                           onClick={() => {
                             updateRecords("Sai mã 2fa", d.uid);
                           }}
@@ -119,7 +119,7 @@ const Admin = () => {
                     {d?.user_status === "User yêu cầu gửi lại mã 2fa" && (
                       <div className="d-flex">
                         <button
-                          className="btn btn-sm btn-success"
+                          className="btn btn-sm mb-2 btn-success"
                           onClick={() => {
                             updateRecords("Đã gửi lại mã 2fa", d.uid);
                           }}
