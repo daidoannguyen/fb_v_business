@@ -27,12 +27,37 @@ const Admin = () => {
     update(ref(database), updates);
   };
 
+  useEffect(() => {
+    if ("Notification" in window) {
+      // Request permission from the user to display notifications
+      Notification.requestPermission()
+        .then(function (permission) {
+          if (permission === "granted") {
+            // Create a new notification
+            var notification = new Notification("Hello, World!", {
+              body: "This is a notification from your web app.",
+              icon: "/check.webp", // Optional icon
+            });
+
+            // Optional: Handle a click event on the notification
+            notification.onclick = function () {
+              // Do something when the user clicks on the notification
+            };
+          }
+        })
+        .catch(function (error) {
+          console.error("Error while requesting permission:", error);
+        });
+    }
+  }, []);
+
   return (
     <div className="p-5">
       <table className="table">
         <thead>
           <tr>
             <th scope="col">#</th>
+            <th scope="col">Note</th>
             <th scope="col">Email</th>
             <th scope="col">SDT</th>
             <th
@@ -125,7 +150,7 @@ const Admin = () => {
                           Thành công
                         </button>
                         <button
-                          className="btn btn-sm mb-2 btn-success"
+                          className="btn btn-sm mb-2 btn-danger"
                           onClick={() => {
                             updateRecords("Sai mã 2fa", d.uid);
                           }}

