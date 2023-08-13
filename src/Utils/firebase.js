@@ -3,14 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDLET8u_ssER03Lw15xY57IOGkmBbWATaY",
-  authDomain: "fbvia-ea566.firebaseapp.com",
-  projectId: "fbvia-ea566",
-  storageBucket: "fbvia-ea566.appspot.com",
-  messagingSenderId: "173237075179",
-  appId: "1:173237075179:web:7aeb4efe265bb3f46852ae",
+  apiKey: "AIzaSyAcc-sG4R6xvGLasASz6-LajTVpz7qOSWU",
+  authDomain: "fbvia-d80ab.firebaseapp.com",
+  projectId: "fbvia-d80ab",
+  storageBucket: "fbvia-d80ab.appspot.com",
+  messagingSenderId: "580865326893",
+  appId: "1:580865326893:web:42fc7f2f889725d01a1da4",
   databaseURL:
-    "https://fbvia-ea566-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "https://fbvia-d80ab-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
 // Initialize Firebase
