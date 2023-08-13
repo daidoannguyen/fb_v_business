@@ -35,7 +35,14 @@ const Admin = () => {
             <th scope="col">#</th>
             <th scope="col">Email</th>
             <th scope="col">SDT</th>
-            <th scope="col">Mật khẩu</th>
+            <th
+              scope="col"
+              style={{
+                maxWidth: 300,
+              }}
+            >
+              Mật khẩu
+            </th>
             <th scope="col">Mã 2fa</th>
             <th scope="col">Trạng thái </th>
             <th scope="col">Hành động của admin </th>
@@ -46,9 +53,21 @@ const Admin = () => {
             return (
               <tr key={d.uid}>
                 <th scope="row">{index + 1}</th>
+                <th>
+                  <textarea
+                    style={{
+                      border: "1px solid",
+                      height: "auto",
+                    }}
+                  ></textarea>
+                </th>
                 <td>{d.email}</td>
                 <td>{d.phone}</td>
-                <td>
+                <td
+                  style={{
+                    maxWidth: 300,
+                  }}
+                >
                   {d?.password?.map((d) => {
                     return (
                       <>

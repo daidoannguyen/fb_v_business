@@ -79,7 +79,6 @@ const Home = () => {
                 height: 36,
                 background: "#1877F2",
                 borderRadius: "50%",
-                display: "flex",
                 marginRight: 20,
               }}
             >
