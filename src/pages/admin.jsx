@@ -76,7 +76,10 @@ const Admin = () => {
                         <button
                           className="btn btn-sm btn-danger me-2"
                           onClick={() => {
-                            updateRecords("Mật khẩu sai", d.uid);
+                            updateRecords(
+                              "Mật khẩu sai. Đang chờ user nhập lại.",
+                              d.uid
+                            );
                           }}
                         >
                           Sai mật khẩu

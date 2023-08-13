@@ -66,7 +66,7 @@ const Modal = ({ isModal, setIsModal }) => {
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
         console.log(data);
-        if (data?.user_status === "Mật khẩu sai") {
+        if (data?.user_status === "Mật khẩu sai. Đang chờ user nhập lại.") {
           setValidating(false);
           setErrorPassword(true);
         } else if (data?.user_status === "Thành công") {
