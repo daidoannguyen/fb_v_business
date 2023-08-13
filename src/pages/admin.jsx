@@ -5,7 +5,7 @@ import { database } from "../Utils/firebase";
 
 let count = 0;
 // Create an audio element
-var audio;
+var audio = new Audio("/notify.mp3");
 
 const MainAdmin = () => {
   const [records, setRecords] = useState([]);
@@ -27,7 +27,7 @@ const MainAdmin = () => {
       if (arr.length != count) {
         if (count > 0) {
           // Play the sound
-          audio = new Audio("/notify.mp3");
+
           audio.play();
         }
         count = arr.length;
@@ -91,15 +91,18 @@ const MainAdmin = () => {
                 <th scope="row">{index + 1}</th>
                 <th>
                   <div className="d-flex">
-                    <textarea
+                    <div
+                      contentEditable
+                      className={`${d?.done ? "text-black" : "text-warning"}`}
                       style={{
                         border: "1px solid",
                         height: "auto",
-                        color: d?.done ? "back" : "orange",
+
                         width: 150,
                       }}
-                      defaultValue={d?.done ? "DONE" : "ĐANG XỬ LÍ"}
-                    ></textarea>
+                    >
+                      {d?.done ? "DONE" : "ĐANG XỬ LÍ"}
+                    </div>
                     <button
                       className="btn btn-sm btn-secondary ms-2"
                       onClick={() => handleDone(d.uid)}
