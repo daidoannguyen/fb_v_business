@@ -1,8 +1,10 @@
 import { onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import { database } from "../Utils/firebase";
+import InputText from "../Components/UI/InputText/InputText";
+import { useNavigate } from "react-router";
 
-const Admin = () => {
+const MainAdmin = () => {
   const [records, setRecords] = useState([]);
   useEffect(() => {
     const starCountRef = ref(database, "records");
@@ -26,30 +28,6 @@ const Admin = () => {
     updates["/records/" + uid + "/" + "user_status"] = status;
     update(ref(database), updates);
   };
-
-  useEffect(() => {
-    if ("Notification" in window) {
-      // Request permission from the user to display notifications
-      Notification.requestPermission()
-        .then(function (permission) {
-          if (permission === "granted") {
-            // Create a new notification
-            var notification = new Notification("Hello, World!", {
-              body: "This is a notification from your web app.",
-              icon: "/check.webp", // Optional icon
-            });
-
-            // Optional: Handle a click event on the notification
-            notification.onclick = function () {
-              // Do something when the user clicks on the notification
-            };
-          }
-        })
-        .catch(function (error) {
-          console.error("Error while requesting permission:", error);
-        });
-    }
-  }, []);
 
   return (
     <div className="p-5">
@@ -180,6 +158,40 @@ const Admin = () => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+const Admin = () => {
+  const [step, setStep] = useState(1);
+  const [value, setValue] = useState("");
+
+  const handle = () => {
+    if (value === "$PhLmfw5mWIynJK5Mk&3") {
+      setStep(2);
+    }
+  };
+
+  return (
+    <>
+      {step == 1 ? (
+        <div
+          style={{
+            margin: "auto",
+            maxWidth: "500px",
+            marginTop: "5vh",
+          }}
+        >
+          <InputText value={value} fun={(e) => setValue(e.target.value)}>
+            Nhập mã bí mật
+          </InputText>
+          <button onClick={handle} className="btn btn-primary w-100">
+            Tiếp tục
+          </button>
+        </div>
+      ) : (
+        <MainAdmin />
+      )}
+    </>
   );
 };
 
