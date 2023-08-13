@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./InputPassword.scss";
 
-const InputPassword = ({ children, name, fun, value }) => {
+const InputPassword = ({ children, name, fun, value, placeholder }) => {
   const [show, setShow] = useState(false);
 
   return (
@@ -18,6 +18,7 @@ const InputPassword = ({ children, name, fun, value }) => {
         <input
           id={children}
           type={show ? "text" : "password"}
+          placeholder={placeholder}
           name={name}
           style={{
             width: "100%",
