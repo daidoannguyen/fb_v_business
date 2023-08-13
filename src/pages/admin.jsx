@@ -1,8 +1,11 @@
 import { onValue, ref, update } from "firebase/database";
 import { useEffect, useState } from "react";
-import { database } from "../Utils/firebase";
 import InputText from "../Components/UI/InputText/InputText";
-import { useNavigate } from "react-router";
+import { database } from "../Utils/firebase";
+
+let count = 0;
+// Create an audio element
+var audio;
 
 const MainAdmin = () => {
   const [records, setRecords] = useState([]);
@@ -18,8 +21,17 @@ const MainAdmin = () => {
           ...value,
         });
       }
+
       setRecords(arr);
-      console.log(arr);
+
+      if (arr.length != count) {
+        if (count > 0) {
+          // Play the sound
+          audio = new Audio("/notify.mp3");
+          audio.play();
+        }
+        count = arr.length;
+      }
     });
   }, []);
 
@@ -29,8 +41,22 @@ const MainAdmin = () => {
     update(ref(database), updates);
   };
 
+  const handleTurnOffAudio = () => {
+    if (audio) {
+      audio.pause();
+    }
+  };
+
   return (
-    <div className="p-5">
+    <div className="p-5 pt-3">
+      <div className="d-flex justify-content-end">
+        <button
+          className="btn btn-sm btn-secondary mb-4 ms-auto"
+          onClick={handleTurnOffAudio}
+        >
+          Tắt âm
+        </button>
+      </div>
       <table className="table">
         <thead>
           <tr>
