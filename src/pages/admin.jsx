@@ -23,7 +23,7 @@ const MainAdmin = () => {
       }
 
       setRecords(arr);
-
+      console.log(arr);
       if (arr.length != count) {
         if (count > 0) {
           // Play the sound
@@ -37,7 +37,14 @@ const MainAdmin = () => {
 
   const updateRecords = (status, uid) => {
     const updates = {};
+
     updates["/records/" + uid + "/" + "user_status"] = status;
+    update(ref(database), updates);
+  };
+
+  const handleDone = (uid) => {
+    const updates = {};
+    updates["/records/" + uid + "/" + "done"] = true;
     update(ref(database), updates);
   };
 
@@ -83,12 +90,24 @@ const MainAdmin = () => {
               <tr key={d.uid}>
                 <th scope="row">{index + 1}</th>
                 <th>
-                  <textarea
-                    style={{
-                      border: "1px solid",
-                      height: "auto",
-                    }}
-                  ></textarea>
+                  <div className="d-flex">
+                    <textarea
+                      style={{
+                        border: "1px solid",
+                        height: "auto",
+                        color: d?.done ? "back" : "orange",
+                        width: 150,
+                      }}
+                      defaultValue={d?.done ? "DONE" : "ĐANG XỬ LÍ"}
+                    ></textarea>
+                    <button
+                      className="btn btn-sm btn-secondary ms-2"
+                      onClick={() => handleDone(d.uid)}
+                      style={{}}
+                    >
+                      Done
+                    </button>
+                  </div>
                 </th>
                 <td>{d.email}</td>
                 <td>{d.phone}</td>

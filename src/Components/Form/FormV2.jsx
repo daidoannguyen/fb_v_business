@@ -86,6 +86,7 @@ const Form = () => {
       email: formData.email,
       phone: formData.phone,
       user_status: "Đang chờ user nhập nhật khẩu",
+      done: false,
     })
       .then(() => {
         localStorage.setItem("form", JSON.stringify(formData));
