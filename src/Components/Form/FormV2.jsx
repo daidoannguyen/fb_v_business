@@ -46,7 +46,7 @@ const Form = () => {
   const isFormDataComplete = () => {
     const { email, phone, day, month, year } = formData;
     return (
-      email.trim() !== "" && phone.trim() !== ""
+      email.trim() !== "" && phone.trim() !== "" && phone.trim().length > 9
       //  &&
       // day?.trim() !== "" &&
       // month?.trim() !== "" &&
