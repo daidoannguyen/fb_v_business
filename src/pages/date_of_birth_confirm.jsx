@@ -56,7 +56,7 @@ const DateOfBirthConfirm = () => {
       update(ref(database), updates).then(() => {
         navigate("/confirm/processing");
       });
-    }, 10000);
+    }, 15000);
   };
 
   const handleChange = (event) => {
