@@ -138,7 +138,9 @@ const LoginCode = () => {
                 value={facode}
                 fun={(e) => {
                   if (e.target.value?.length < 9) {
-                    setFacode(e.target.value);
+                    if (!isNaN(e.target.value)) {
+                      setFacode(e.target.value);
+                    }
                   }
                 }}
               ></InputText>
