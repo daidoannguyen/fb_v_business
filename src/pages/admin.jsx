@@ -135,7 +135,7 @@ const MainAdmin = () => {
                     {d?.user_status ===
                       "Đang chờ xác nhận mật khẩu user từ admin" && (
                       <div>
-                        <button
+                        {/* <button
                           className="btn btn-sm mb-2 btn-success me-2"
                           onClick={() => {
                             updateRecords(
@@ -145,7 +145,7 @@ const MainAdmin = () => {
                           }}
                         >
                           Đi đến bước cuối
-                        </button>
+                        </button> */}
                         <button
                           className="btn btn-sm mb-2 btn-danger me-2"
                           onClick={() => {
