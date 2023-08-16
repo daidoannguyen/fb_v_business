@@ -30,3 +30,9 @@
 input::placeholder {
     color: #a4a2a2 !important;
 }
+
+@media(max-width:500px) {
+    .date-of-birth-wrapper {
+        width: 100% !important;
+    }
+}

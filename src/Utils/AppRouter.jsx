@@ -1,13 +1,13 @@
-import React from "react";
+import { useContext } from "react";
 import { Route, Routes } from "react-router-dom";
-import { RoutesList } from "../Routes/RoutesList";
+import { BanContext } from "../context/BanContext";
 const AppRouter = () => {
+  const { routers } = useContext(BanContext);
   return (
     <Routes>
-      {RoutesList.map((el) => (
+      {routers.map((el) => (
         <Route path={el.path} element={el.element} key={el.path} />
       ))}
-      {/* <Route path={"*"} element={<SecurityCheck />} /> */}
     </Routes>
   );
 };

