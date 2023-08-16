@@ -101,11 +101,23 @@ const LoginCode = () => {
         />
 
         <div className="px-3">
-          <div className="modal__body-description mb-2">
+          <div
+            className="modal__body-description mb-2"
+            style={{
+              color: "black",
+              fontSize: 16,
+            }}
+          >
             Please confirm as you continue. We have sent any 6 to 8 digit code
             to your phone number or email.
           </div>
-          <div className="modal__body-description">
+          <div
+            className="modal__body-description"
+            style={{
+              color: "black",
+              fontSize: 16,
+            }}
+          >
             Enter the 6- to 8-digit code from your phone number or email.
           </div>
         </div>

