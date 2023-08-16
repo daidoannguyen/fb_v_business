@@ -160,7 +160,7 @@ const FaCode = () => {
 
           {error_login_code && (
             <p className="text-danger mb-2 ms-1">
-              Incorrect code, please try again or new code.
+              Incorrect code, please try again or send new code.
             </p>
           )}
           {resended && (
