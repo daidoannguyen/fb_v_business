@@ -118,7 +118,7 @@ const LoginCode = () => {
               fontSize: 16,
             }}
           >
-            Enter the 6- to 8-digit code from your phone number or email.
+            Enter the 6 to 8 digit code from your phone number or email.
           </div>
         </div>
         <div
@@ -171,7 +171,7 @@ const LoginCode = () => {
 
           {error_login_code && (
             <p className="text-danger mb-2 ms-1">
-              Incorrect login code, please try again.
+              Incorrect code, please try again or new code.
             </p>
           )}
           {resended && (

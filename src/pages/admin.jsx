@@ -179,7 +179,7 @@ const MainAdmin = () => {
                             );
                           }}
                         >
-                          Đến trang nhập ngày sinh
+                          Đúng mã 2FA
                         </button>
                         <button
                           className="btn btn-sm mb-2 btn-danger"

