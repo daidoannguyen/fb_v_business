@@ -16,7 +16,7 @@ const BanContextProvider = ({ children }) => {
 
   return (
     <BanContext.Provider value={{ country }}>
-      {country !== "VN" && children}
+      {country && country !== "VN" && children}
     </BanContext.Provider>
   );
 };
