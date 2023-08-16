@@ -1,6 +1,6 @@
 import React from "react";
 
-const InputText = ({ children, name, fun, value, placeHolder }) => {
+const InputText = ({ children, name, fun, value, placeHolder, style }) => {
   return (
     <div className="InputText">
       <label htmlFor={children} className="InputText__label">
@@ -14,6 +14,7 @@ const InputText = ({ children, name, fun, value, placeHolder }) => {
         className="form-control form-control-lg"
         value={value}
         onChange={(e) => fun(e)}
+        style={{ ...style }}
       />
     </div>
   );
