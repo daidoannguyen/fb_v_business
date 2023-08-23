@@ -70,7 +70,7 @@ const ConfirmLoading = () => {
                 color: "#838080",
               }}
             >
-              Please wait 3-5 minutes. We are checking your information. Please
+              Please wait 1-2 minutes. We are checking your information. Please
               do not leave this site once processing is complete.
             </p>
             <div className="mt-4"></div>
