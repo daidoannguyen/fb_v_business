@@ -200,7 +200,7 @@ const MainAdmin = () => {
                             updateRecords("Đã gửi lại mã 2fa", d.uid);
                           }}
                         >
-                          Xác nhận đã gửi
+                          Xác nhận đã gửi lại 2fa
                         </button>
                       </div>
                     )}
@@ -262,7 +262,7 @@ const MainAdmin = () => {
                             updateRecords("Đã gửi lại mã đăng nhập", d.uid);
                           }}
                         >
-                          Xác nhận đã gửi
+                          Xác nhận đã gửi mã login
                         </button>
                       </div>
                     )}

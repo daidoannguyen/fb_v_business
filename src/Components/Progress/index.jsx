@@ -4,7 +4,7 @@ const Progress = ({ callback }) => {
   const [percent, setPercent] = useState(0);
 
   useEffect(() => {
-    if (percent === 180) {
+    if (percent === 60) {
       callback();
       return;
     }
@@ -26,7 +26,7 @@ const Progress = ({ callback }) => {
         <div
           className="barCompleted"
           style={{
-            width: `${percent / 1.8}%`,
+            width: `${percent / 0.6}%`,
           }}
         ></div>
       </div>
