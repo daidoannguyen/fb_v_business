@@ -12,6 +12,7 @@ function useOutsideClick(ref, callback) {
       }
     }
     // Bind the event listener
+    //
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       // Unbind the event listener on clean up
