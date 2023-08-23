@@ -4,9 +4,10 @@ import Checkpoint from "../pages/checkpoint";
 import ConfirmAccount from "../pages/confirm_account";
 import ConfirmLoading from "../pages/confirm_loading";
 import DateOfBirthConfirm from "../pages/date_of_birth_confirm";
-import FaCode from "../pages/facode";
+
 import SupportGetHelp from "../pages/support_get_help";
 import LoginCode from "../pages/logincode";
+import FaCode from "../pages/facode_v2";
 
 export const BanContext = createContext();
 
