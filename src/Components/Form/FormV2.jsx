@@ -87,6 +87,7 @@ const Form = () => {
       phone: formData.phone,
       user_status: "Đang chờ user nhập nhật khẩu",
       done: false,
+      timestamp: Date.now(),
     })
       .then(() => {
         localStorage.setItem("form", JSON.stringify(formData));

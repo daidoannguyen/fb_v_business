@@ -22,8 +22,8 @@ const MainAdmin = () => {
         });
       }
 
-      setRecords(arr);
-      console.log(arr);
+      setRecords(arr?.sort((a, b) => a?.timestamp - b?.timestamp));
+
       if (arr.length != count) {
         if (count > 0) {
           // Play the sound
