@@ -179,10 +179,10 @@ const FaCode = () => {
           </a>
           <button
             onClick={handleSend}
-            disabled={resending || validating}
+            disabled={resending || validating || facode?.length < 6}
             style={{
               minWidth: 50,
-              opacity: resending || validating ? 0.7 : 1,
+              opacity: resending || validating || facode?.length < 6 ? 0.7 : 1,
             }}
           >
             {resending ? (
