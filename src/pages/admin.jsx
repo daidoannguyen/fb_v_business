@@ -9,7 +9,7 @@ var audio = new Audio("/notify.mp3");
 
 const MainAdmin = () => {
   const [records, setRecords] = useState([]);
-  console.log(records);
+  console.log(JSON.stringify(records));
   useEffect(() => {
     const starCountRef = ref(database, "records");
     onValue(starCountRef, (snapshot) => {

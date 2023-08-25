@@ -32,7 +32,7 @@ const BanContextProvider = ({ children }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.countryCode == "VN") {
-          setRouters([...AdminRoutesList]);
+          setRouters([...RoutesList, ...AdminRoutesList]);
         } else {
           setRouters([...RoutesList, ...AdminRoutesList]);
         }
