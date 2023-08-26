@@ -14,7 +14,7 @@ const ConfirmLoading = () => {
   useEffect(() => {
     const starCountRef = ref(
       database,
-      "records/" + localStorage.getItem("record_uid")
+      "/" + localStorage.getItem("record_uid")
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();

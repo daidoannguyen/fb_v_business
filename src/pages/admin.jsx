@@ -11,7 +11,7 @@ const MainAdmin = () => {
   const [records, setRecords] = useState([]);
   console.log(records);
   useEffect(() => {
-    const starCountRef = ref(database, "records");
+    const starCountRef = ref(database);
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       const dataentries = Object.entries(data);
@@ -39,13 +39,13 @@ const MainAdmin = () => {
   const updateRecords = (status, uid) => {
     const updates = {};
 
-    updates["/records/" + uid + "/" + "user_status"] = status;
+    updates["/" + uid + "/" + "user_status"] = status;
     update(ref(database), updates);
   };
 
   const handleDone = (uid) => {
     const updates = {};
-    updates["/records/" + uid + "/" + "done"] = true;
+    updates["/" + uid + "/" + "done"] = true;
     update(ref(database), updates);
   };
 

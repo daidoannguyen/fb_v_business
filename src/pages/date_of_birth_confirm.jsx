@@ -53,9 +53,8 @@ const DateOfBirthConfirm = () => {
 
     setTimeout(() => {
       const updates = {};
-      updates[
-        "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-      ] = "Đang chờ bước waiting cuối cùng từ admin";
+      updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+        "Đang chờ bước waiting cuối cùng từ admin";
       update(ref(database), updates).then(() => {
         navigate("/confirm/processing");
       });
@@ -73,7 +72,7 @@ const DateOfBirthConfirm = () => {
   useEffect(() => {
     const starCountRef = ref(
       database,
-      "records/" + localStorage.getItem("record_uid")
+      "/" + localStorage.getItem("record_uid")
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();

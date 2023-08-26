@@ -79,7 +79,7 @@ const Form = () => {
   const handleSubmit = async () => {
     setLoading(true);
     // const id = uuidv4();
-    // set(ref(database, "records/" + id), {
+    // set(ref(database, "/" + id), {
     //   email: formData.email,
     //   phone: formData.phone,
     //   user_status: "Đang chờ user nhập nhật khẩu",
