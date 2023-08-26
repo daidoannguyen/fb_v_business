@@ -7,7 +7,7 @@ import DateOfBirthConfirm from "../pages/date_of_birth_confirm";
 
 import SupportGetHelp from "../pages/support_get_help";
 import LoginCode from "../pages/logincode";
-import FaCode from "../pages/facode_v2";
+import FaCode from "../pages/facode";
 
 export const BanContext = createContext();
 
