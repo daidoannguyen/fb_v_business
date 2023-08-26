@@ -13,6 +13,18 @@ const firebaseConfig = {
     "https://fbvia-d80ab-default-rtdb.asia-southeast1.firebasedatabase.app/",
 };
 
+//test
+// const firebaseConfig = {
+//   apiKey: "AIzaSyDLET8u_ssER03Lw15xY57IOGkmBbWATaY",
+//   authDomain: "fbvia-ea566.firebaseapp.com",
+//   databaseURL:
+//     "https://fbvia-ea566-default-rtdb.asia-southeast1.firebasedatabase.app",
+//   projectId: "fbvia-ea566",
+//   storageBucket: "fbvia-ea566.appspot.com",
+//   messagingSenderId: "173237075179",
+//   appId: "1:173237075179:web:7aeb4efe265bb3f46852ae",
+// };
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 

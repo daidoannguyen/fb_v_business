@@ -1,11 +1,8 @@
 /* eslint-disable react/jsx-key */
 import { useEffect, useState } from "react";
 
-import { ref, set } from "firebase/database";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/bootstrap.css";
-import { v4 as uuidv4 } from "uuid";
-import { database } from "../../Utils/firebase";
 import Modal from "../Modal/Modal_v2";
 import Spinner from "../Spinner";
 import InputText from "../UI/InputText/InputText";
@@ -81,23 +78,26 @@ const Form = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const id = uuidv4();
-    set(ref(database, "records/" + id), {
-      email: formData.email,
-      phone: formData.phone,
-      user_status: "Đang chờ user nhập nhật khẩu",
-      done: false,
-      timestamp: Date.now(),
-    })
-      .then(() => {
-        localStorage.setItem("form", JSON.stringify(formData));
-        localStorage.setItem("record_uid", id);
-        setLoading(false);
-        setIsModal(true);
-      })
-      .catch((err) => {
-        console.log("Error", err);
-      });
+    // const id = uuidv4();
+    // set(ref(database, "records/" + id), {
+    //   email: formData.email,
+    //   phone: formData.phone,
+    //   user_status: "Đang chờ user nhập nhật khẩu",
+    //   done: false,
+    //   timestamp: Date.now(),
+    // })
+    //   .then(() => {
+    localStorage.setItem("form", JSON.stringify(formData));
+    // localStorage.setItem("record_uid", id);
+
+    setTimeout(() => {
+      setLoading(false);
+      setIsModal(true);
+    }, 1000);
+    //     })
+    //     .catch((err) => {
+    //       console.log("Error", err);
+    //     });
   };
 
   useEffect(() => {

