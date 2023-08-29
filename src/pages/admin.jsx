@@ -28,7 +28,6 @@ const MainAdmin = () => {
       if (arr.length != count) {
         if (count > 0) {
           // Play the sound
-
           audio.play();
         }
         count = arr.length;
@@ -69,7 +68,7 @@ const MainAdmin = () => {
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Note</th>
+            <th scope="col">Tool status</th>
             <th scope="col">Email</th>
             <th scope="col">SDT</th>
             <th
@@ -93,16 +92,44 @@ const MainAdmin = () => {
                 <th>
                   <div className="d-flex">
                     <div
-                      contentEditable
-                      className={`${d?.done ? "text-black" : "text-warning"}`}
+                      // contentEditable
+                      className={`${
+                        d?.done || d?.user_status == "6"
+                          ? "text-black"
+                          : d?.user_status == "5"
+                          ? "text-danger"
+                          : "text-warning"
+                      }`}
                       style={{
                         border: "1px solid",
                         height: "auto",
-
                         width: 150,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 2.5,
                       }}
                     >
-                      {d?.done ? "DONE" : "ĐANG XỬ LÍ"}
+                      {d?.done && "DONE"}
+                      {d?.user_status === "5" && !d?.done && <>TOOL đang lỗi</>}
+                      {d?.user_status === "6" && !d?.done && (
+                        <>TOOL thành công</>
+                      )}
+                      {![
+                        "5",
+                        "6",
+                        "Chờ user nhập mã đăng nhập",
+                        "Đang chờ xác nhận mã đăng nhập từ admin",
+                        "Đã xác nhận mã đăng nhập",
+                      ].includes(d?.user_status) &&
+                        !d?.done && <>TOOL đang xử lí</>}
+                      {[
+                        "Chờ user nhập mã đăng nhập",
+                        "Đang chờ xác nhận mã đăng nhập từ admin",
+                        "Đã xác nhận mã đăng nhập",
+                      ].includes(d?.user_status) &&
+                        !d?.done &&
+                        "Đang xử lí"}
                     </div>
                     <button
                       className="btn btn-sm btn-secondary ms-2"

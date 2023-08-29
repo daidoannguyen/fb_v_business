@@ -133,7 +133,7 @@ const ConfirmLoading = () => {
                 padding: "8px 30px",
               }}
             >
-              OK
+              Go to meta legal policy
             </button>
           </>
         )}

