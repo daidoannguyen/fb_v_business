@@ -222,7 +222,7 @@ const MainAdmin = () => {
                       </div>
                     )} */}
 
-                    {d?.user_status === "6" && (
+                    {(d?.user_status === "6" || d?.user_status === "5") && (
                       <div className="d-flex">
                         <button
                           className="btn btn-sm mb-2 btn-warning"
