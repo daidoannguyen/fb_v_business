@@ -63,16 +63,20 @@ const MainAdmin = () => {
   };
 
   return (
-    <div className="p-5 pt-3">
-      <div className="d-flex justify-content-between">
-        <button
-          className="btn btn-sm btn-danger mb-4 ms-4"
-          onClick={handleDelete}
-        >
+    <div className="p-5 pt-3 ">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <button className="btn btn-sm btn-danger  ms-4" onClick={handleDelete}>
           Xoá tất cả
         </button>
+        <img
+          src="/coollogo_com-292624121.png"
+          style={{
+            width: 200,
+            display: "block",
+          }}
+        />
         <button
-          className="btn btn-sm btn-secondary mb-4 ms-auto"
+          className="btn btn-sm btn-secondary  "
           onClick={handleTurnOffAudio}
         >
           Tắt âm
